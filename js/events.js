@@ -61,23 +61,63 @@ function ShowForm(Image){
 	g.style.backgroundImage="url('"+Image.src+"')";
 }
 
-function AnotherItem(Check){
-	var cid=Check.id;
-	if(cid=="check1"){
-		var a=document.getElementById("another1");
-	}
-	else if(cid=="check2"){
-		var a=document.getElementById("another2");
-	}
-	else if(cid=="check3"){
-		var a=document.getElementById("another3");
-	}
-		console.log(a);
+function log(){
+    document.getElementById("in").style.display="none";
+    document.getElementById("out").style.display="inline";
+}
 
-	if (cid.checked){	
-		a.style.display="block";
+function validate1(){
+	var valid=false;
+	if(document.getElementById('Mon').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Tue').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Wed').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Thu').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Fri').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Sat').checked){
+		valid=true;
+	}
+	else if(document.getElementById('Sun').checked){
+		valid=true;
+	}
+	if(!valid){
+		alert("Please select atleast one Working days")
+		return false;
 	}
 	else{
-		a.style.display="none";
+		return true;
 	}
+
+}
+function validate2(){
+	var valid=false;
+	if(document.getElementById('toys').checked){
+		valid=true;
+	}
+	else if(document.getElementById('bags').checked){
+		valid=true;
+	}
+	else if(document.getElementById('dress').checked){
+		valid=true;
+	}
+	else if(document.getElementById('shoes').checked){
+		valid=true;
+	}
+	if(!valid){
+		alert("Please select atleast one item to donate.")
+		return false;
+	}
+	else{
+		return true;
+	}
+
 }

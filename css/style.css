@@ -88,10 +88,10 @@ text-decoration:none;
 }
 
 /*Index Page style starts*/
-.first{
+#first{
 	height:800px;
 }
-.first::before{
+#first::before{
 	content: "";
 	position: absolute;
 	top:100px;
@@ -103,7 +103,7 @@ text-decoration:none;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-.first a{
+#first a{
 	position: absolute;
 	text-decoration: none;
 	top: 380px;
@@ -120,7 +120,7 @@ text-decoration:none;
     padding-top: 20px;
 
 }
-.first a:hover{
+#first a:hover{
     cursor: pointer;
     background: #ffc107;
     color: #000;
@@ -133,14 +133,14 @@ blockquote{
 	font-style: italic;
 	font-weight: bold;
 }
-article p{
+#second p{
 	display: inline-block;
 	width: 600px;
 	float: left;
 	font-size: 30px;
     margin-left: 25px;
 }
-article img{
+#second img{
 	width: 500px;
 	height: 500px;
 	border:black solid; 

@@ -20,15 +20,9 @@
 			<a href="logout.php" id="out">LOGOUT</a>
 		</nav>
  <?php
-
 session_start();
-include('dbcon.php');
 if(isset($_SESSION['username'])){
 	echo '<script type="text/javascript">
-	function log(){
-		document.getElementById("in").style.display="none";
-		document.getElementById("out").style.display="inline";
-	}
 	log();
 	</script>';
 }
@@ -36,13 +30,13 @@ if(isset($_SESSION['username'])){
 
 	</header>
 
-	<article class="first">
+	<div id="first">
 		<blockquote>"The things we hope for lead us to faith,while the things we hope in lead us to charity"</blockquote>
 
 		<a href="join.php">JOIN US</a>
-	</article>
+	</div>
 
-	<article>
+	<div id="second">
 		<h1>Welcome to Anonymous Hope </h1>
 		<p>Hello Donar welcome to Anonymous Hope Charity website.A place where you can donate items and bring a smile on 
 		on someone face.The items may not be useful to you now,may be used up or fulfill your needs but i'm sure of one thing that it
@@ -50,7 +44,7 @@ if(isset($_SESSION['username'])){
 		</p>
 		<img src="../images/teddybear.jpg">
 
-	</article>
+	</div>
 
 	<footer>Follow us on <a href=""><i class="fa fa-2x fa-instagram"></i></a> <a href=""><i class="fa fa-2x fa-facebook"></i></a> <a href=""><i class="fa fa-2x fa-twitter"></i></a><br>
 	 </br>Contact us on anonymoushope@gmail.com

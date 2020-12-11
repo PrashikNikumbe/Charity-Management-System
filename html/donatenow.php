@@ -1,19 +1,6 @@
 <?php
 if (isset($_POST['submit'])) {
-    
-    $server = "localhost:3307";
-    $username = "root";
-    $password = '';
-
-    $con =mysqli_connect($server,$username,$password);
-
-    if(!$con){
-        //die("Connection failure" . mysqli_connect_error());
-    }
-    else{
-        //echo "successfuly";
-    }
- 
+    include('dbcon.php'); 
     $fn = $_POST['fn'];
     $ln = $_POST['ln'];
     $email = $_POST['email'];
@@ -24,7 +11,7 @@ if (isset($_POST['submit'])) {
     $city = $_POST['city'];
     $gender = $_POST['gender'];
     $age = $_POST['age'];
-    $item = $_POST['item'];
+    $item = implode(',',$_POST['ch']);
     $quantity = $_POST['quantity'];
     $workingdays = $_POST['workingdays'];
     $des = $_POST['des'];
@@ -42,7 +29,7 @@ if (isset($_POST['submit'])) {
         echo '<script type="text/javascript">alert("Thank you for Donation")</script>';
     }
     else{
-        echo "ERROR : $sql <br> $con->error";
+        //echo "ERROR : $sql <br> $con->error";
     }
 
     $con->close();
@@ -57,7 +44,7 @@ if (isset($_POST['submit'])) {
     <title>Donate</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="../js/events.js"></script>
+    <script type="text/javascript" src="../js/events.js?<?php echo time();?>"></script>
 
 </head>
 <body id="donatebody">
@@ -76,13 +63,8 @@ if (isset($_POST['submit'])) {
  <?php
 
 session_start();
-include('dbcon.php');
 if(isset($_SESSION['username'])){
     echo '<script type="text/javascript">
-    function log(){
-        document.getElementById("in").style.display="none";
-        document.getElementById("out").style.display="inline";
-    }
     log();
     </script>';
 }
@@ -105,7 +87,7 @@ else{
 
 	    <img src="../images/toy7.jpg" class="things" alt="Image of Toy" onmouseover="TextShow(this)" onmouseout="TextHide(this)" onclick="ShowForm(this)">
 	    <p class="itemsname">Toys</p>
-        <img src="../images/bag4.jpg" class="things" alt="Image of Bag" onmouseover="TextShow(this)" onmouseout="TextHide(this)" onclick="ShowForm(this)">
+        <img src="../images/bag2.jpg" class="things" alt="Image of Bag" onmouseover="TextShow(this)" onmouseout="TextHide(this)" onclick="ShowForm(this)">
         <p class="itemsname">Bags</p>
         <img src="../images/clothes3.jpg" class="things" alt="Image of dress" onmouseover="TextShow(this)" onmouseout="TextHide(this)" onclick="ShowForm(this)">
         <p class="itemsname">Dress</p>
@@ -118,7 +100,7 @@ else{
         </p>
         <div class="volunteerbox">
     	<h1>Donation Form</h1><br>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" onsubmit="return validate2()">
         <label for="">First Name<span>*</span></label><br>
         <input type="text" name="fn" id="" placeholder="First name" required><br><br>
         <label for="">Last Name<span>*</span></label><br>
@@ -129,7 +111,7 @@ else{
         <input type="tel" name="phno" id="" placeholder="ph. number" required><br><br>
 
         Address<span>*</span><br>
-        <textarea name="address" id="" cols="40" rows="5" placeholder="type here"></textarea><br><br>
+        <textarea name="address" id="" cols="40" rows="5" placeholder="type here" required></textarea><br><br>
          
         <label for="City">City<span>*</span></label>
         <select name="city" id="City" required>
@@ -143,29 +125,33 @@ else{
 
         
         <label for="">Select Gender<span>*</span></label>
+        <input type="radio" name="gender"  value="Male" required>
         <label for="Male">Male</label>
-        <input type="radio" name="gender" id="Male" value="Male" required>
+        <input type="radio" name="gender"  value="Female">
         <label for="Female">Female</label>
-        <input type="radio" name="gender" id="Female" value="Female">
-        <label for="Other">Other</label>
-        <input type="radio" name="gender" id="Other" value="Other"><br><br>
+        <input type="radio" name="gender"  value="Other">
+        <label for="Other">Other</label><br><br>
 
         <label for="Age">Age<span>*</span></label>
         <input type="number" name="age" id="Age" required ><br><br>
 
         
-        <label for="">Select which item do you want to donate<span>*</span></label><br>
-        <label for="Toys">Toys</label>
-        <input type="radio" name="item" value="toys" required><br>
-        <label for="Female">Bags</label>
-        <input type="radio" name="item" value="bags"><br>
-        <label for="Other">Dress</label>
-        <input type="radio" name="item" value="dress"><br>
-        <label for="Other">Shoes</label>
-        <input type="radio" name="item" value="shoes"><br><br>
+        <label for="">Select which item do you want to donate(one or more)<span>*</span></label><br>
+
+        <input type="checkbox" name="ch[]" id='toys' value="toys" >
+        <label for="">Toys</label><br>
+        <input type="checkbox" name="ch[]" id='bags' value="bags" >
+        <label for="">Bags</label><br>
+        <input type="checkbox" name="ch[]" id='dress' value="dress" >
+        <label for="">Dress</label><br>
+        <input type="checkbox" name="ch[]"  id='shoes' value="shoes" >
+        <label for="">Shoes</label><br><br>
+
+
+ 
         <label for="Img" >Upload an image of an item:<span>*</span></label><br><br>
         <label>For multiple images, please upload a pdf of it.</label><br><br>
-        <input type="file"  name="file" ><br><br>
+        <input type="file"  name="file" required><br><br>
 
         <label for="quantity">How much quantity do you want to donate?<span>*</span></label>
         <input type="number" name="quantity" required><br><br>      

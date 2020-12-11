@@ -1,20 +1,7 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    
-    $server = "localhost:3307";
-    $username = "root";
-    $password = '';
-
-    $con =mysqli_connect($server,$username,$password);
-
-    if(!$con){
-        //die("Connection failure" . mysqli_connect_error());
-    }
-    else{
-        //echo "successfuly";
-    }
- 
+    include('dbcon.php'); 
     $fn = $_POST['fn'];
     $ln = $_POST['ln'];
     $email = $_POST['email'];
@@ -29,7 +16,7 @@ if (isset($_POST['submit'])) {
 
 
 
-    $sql = "INSERT INTO `anonymous_hope`.`volunteer` (`FirstName`,`LastName`,`Email`,`Phno`,`Address`,`City`,`Gender`,`Age`,`Contribution`,`Expectation`,`WorkingDays`, `DateTime`) VALUES ('$fn','$ln','$email','$phno','$address','$city','$gender','$age','$contribution','$expectation','$workingdays',current_timestamp());";
+    $sql = "INSERT INTO `volunteer` (`FirstName`,`LastName`,`Email`,`Phno`,`Address`,`City`,`Gender`,`Age`,`Contribution`,`Expectation`,`WorkingDays`, `DateTime`) VALUES ('$fn','$ln','$email','$phno','$address','$city','$gender','$age','$contribution','$expectation','$workingdays',current_timestamp());";
    
 
     if($con->query($sql) == true){
@@ -50,7 +37,7 @@ if (isset($_POST['submit'])) {
     <title>Volunteer</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css?<?php echo time();?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script type="text/javascript" src="../js/events.js?<?php echo time();?>"></script>
 
 </head>
 <body id='volunteerbody'>
@@ -67,15 +54,9 @@ if (isset($_POST['submit'])) {
             <a href="logout.php" id="out">LOGOUT</a>
         </nav>
  <?php
-
 session_start();
-include('dbcon.php');
 if(isset($_SESSION['username'])){
     echo '<script type="text/javascript">
-    function log(){
-        document.getElementById("in").style.display="none";
-        document.getElementById("out").style.display="inline";
-    }
     log();
     </script>';
 }
@@ -91,7 +72,7 @@ else{
         </p>
     <div class="volunteerbox">
         <h1>Volunteer Registration</h1><br>
-        <form action=join.php method="post">
+        <form action=join.php method="post" onsubmit="return validate1()">
         <label for="">First Name<span>*</span></label><br>
         <input type="text" name="fn" id="" placeholder="First name" required><br><br>
         <label for="">Last Name<span>*</span></label><br>
@@ -116,12 +97,12 @@ else{
 
         
         <label for="">Select Gender<span>*</span></label>
+        <input type="radio" name="gender"  value="Male" required>
         <label for="Male">Male</label>
-        <input type="radio" name="gender" id="Male" value="Male" required>
+        <input type="radio" name="gender"  value="Female">
         <label for="Female">Female</label>
-        <input type="radio" name="gender" id="Female" value="Female">
-        <label for="Other">Other</label>
-        <input type="radio" name="gender" id="Other" value="Other"><br><br>
+        <input type="radio" name="gender"  value="Other">
+        <label for="Other">Other</label><br><br>
 
         <label for="Age">Age<span>*</span></label>
         <input type="number" name="age" id="Age" ><br><br>
@@ -136,19 +117,19 @@ else{
 
         
         <label for="">Choose Working Days<span>*</span></label><br>
-        <input type="checkbox" name="ch[]" id="Mon" value="Monday" required>
+        <input type="checkbox" name="ch[]" id="Mon" value="Monday"  >
         <label for="Mon">Monday</label>
-        <input type="checkbox" name="ch[]" id="Tue" value="Tuesday">
+        <input type="checkbox" name="ch[]" id="Tue" value="Tuesday" >
         <label for="Tue">Tuesday</label>
-        <input type="checkbox" name="ch[]" id="Wed" value="Wednesday">
+        <input type="checkbox" name="ch[]" id="Wed" value="Wednesday" >
         <label for="Wed">Wednesday</label><br>
-        <input type="checkbox" name="ch[]" id="Thu" value="Thursday">
+        <input type="checkbox" name="ch[]" id="Thu" value="Thursday" >
         <label for="Thu">Thursday</label>
-        <input type="checkbox" name="ch[]" id="Fri" value="Friday">
+        <input type="checkbox" name="ch[]" id="Fri" value="Friday" >
         <label for="Fri">Friday</label>
-        <input type="checkbox" name="ch[]" id="Sat" value="Saturday">
+        <input type="checkbox" name="ch[]" id="Sat" value="Saturday" >
         <label for="Sat">Saturday</label><br>
-        <input type="checkbox" name="ch[]" id="Sun" value="Sunday">
+        <input type="checkbox" name="ch[]" id="Sun" value="Sunday" >
         <label for="Sun">Sunday</label><br>
         <br><br>
         <input name="submit" type="submit" value="Submit">
